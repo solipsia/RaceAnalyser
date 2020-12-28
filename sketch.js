@@ -14,7 +14,7 @@ let timesteps=1000; // granularity of time, e.g 100 time steps on the x axis
 
 function preload() {
 	results = loadTable('ThamesPath100Results.csv','csv');
-}
+} 
 
 function runnerdistanceattime(r,t) {
 	for (let i=0;i<aidstationdist.length;i++){
