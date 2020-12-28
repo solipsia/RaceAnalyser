@@ -68,9 +68,12 @@ function draw() {
 	}
 	for (let r=0;r<runner.length;r++) {
 		x=racestate[slider.value()][r]/racedistance*graphwidth+xoffset;
-		stroke(runner[r][results.getColumnCount()-1]*255,255,255,0.5);
+		stroke(runner[r][results.getColumnCount()-1]*255,255,255,0.5); // colour by finish time
+		stroke(map((racestate[min(slider.value()+1,timesteps-1)][r]-racestate[slider.value()][r]),0,0.4,0,255),255,255,0.5); // colour pace
 		line(x,graphheight+yoffset,x,graphheight+yoffset-500);
 	}
 	text(str(slider.value()/timesteps*28.0),50,20+yoffset)
+
+	//text(str((racestate[slider.value()+1][0]-racestate[slider.value()][0])),50,80+yoffset)
 
 }
