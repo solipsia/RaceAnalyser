@@ -9,6 +9,7 @@ let bins_finisher=[]; // number of runners within each distance bin at given tim
 let bins_DNF=[];
 let medians=[]; // stores median runner's distance for every timestep
 let slowestfinisher=[]; 
+let fastestfinisher=[]; 
 
 let graphwidth;
 let graphheight=500;
@@ -78,6 +79,7 @@ function setup() {
 		bins_finisher[i]=[];
 		bins_DNF[i]=[];
 		slowestfinisher[i]=racedistance;
+		//fastestfinisher=0;
 		for (let y=0;y<diststeps;y++) {
 			bins_DNF[i][y]=0;
 		}
@@ -96,6 +98,7 @@ function setup() {
 			} else {  //finisher
 				
 				slowestfinisher[i]=min(racestate[i][r],slowestfinisher[i])
+				//fastestfinisher[i]=max(racestate[i][r],fastestfinisher[i])
 				if (typeof bins_finisher[i][bin] === 'undefined') {
 					bins_finisher[i][bin]=1;
 				} else {
@@ -134,7 +137,7 @@ function draw() {
 	fill(0,0,0,1);
 	textSize(16);
 	text("median "+str(round(medians[slider.value()]*10)/10)+"km",x+5,20+yoffset+2*15)
-	//ave line
+	//slowest line
 	stroke(1,0,0,1);
 	x=slowestfinisher[slider.value()]/racedistance*graphwidth+xoffset;
 	line(x,graphheight+yoffset,x,yoffset);
@@ -142,6 +145,14 @@ function draw() {
 	fill(0,0,0,1);
 	textSize(16);
 	text("slowest finisher "+str(round(slowestfinisher[slider.value()]*10)/10)+"km",x+5,20+yoffset+1*15)
+	//fastest line
+	// stroke(1,0,0,1);
+	// x=fastestfinisher[slider.value()]/racedistance*graphwidth+xoffset;
+	// line(x,graphheight+yoffset,x,yoffset);
+	// noStroke();
+	// fill(0,0,0,1);
+	// textSize(16);
+	// text("record "+str(round(fastestfinisher[slider.value()]*10)/10)+"km",x+5,20+yoffset+1*15)
 
 
 	for (let r=0;r<runner.length;r++) { // draw runners
