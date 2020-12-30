@@ -12,7 +12,7 @@ let slowestfinisher=[];
 let fastestfinisher=[]; 
 
 let graphwidth;
-let graphheight=500;
+let graphheight=300;
 let xoffset=30;
 let yoffset=20;
 let timesteps=1000; // granularity of time, e.g 100 time steps on the x axis
@@ -55,7 +55,7 @@ function setup() {
 	graphwidth=windowWidth-50;
 	frameRate(30);
 	colorMode(HSB, 255, 255, 255, 1);
-	slider = createSlider(0.0, timesteps-1, 0, 1);
+	slider = createSlider(0.0, timesteps-1, timesteps/4 , 1);
   	slider.position(xoffset, graphheight+20);
 	  slider.style('width', '1000px');
 	
@@ -115,36 +115,13 @@ function draw() {
 	clear();
 	noFill();
 	fill(255,0,255,0.5);
+	stroke(0,0,200,1)
 	rect(xoffset, yoffset, graphwidth, graphheight);
 	for (let a=0;a<aidstationdist.length;a++) { // aidstation lines
 		stroke(1,0,0,0.1);
 		x=aidstationdist[a]/racedistance*graphwidth+xoffset;
 		line(x,graphheight+yoffset,x,yoffset);
 	}
-	//cut-off line
-	stroke(1,0,0,1);
-	x=slider.value()*graphwidth/timesteps+xoffset;
-	line(x,graphheight+yoffset,x,yoffset);
-	noStroke();
-	fill(0,0,0,1);
-	textSize(16);
-	text("cut-off",x+5,20+yoffset+0*15)
-	//median line
-	stroke(1,0,0,1);
-	x=medians[slider.value()]/racedistance*graphwidth+xoffset;
-	line(x,graphheight+yoffset,x,yoffset);
-	noStroke();
-	fill(0,0,0,1);
-	textSize(16);
-	text("median "+str(round(medians[slider.value()]*10)/10)+"km",x+5,20+yoffset+2*15)
-	//slowest line
-	stroke(1,0,0,1);
-	x=slowestfinisher[slider.value()]/racedistance*graphwidth+xoffset;
-	line(x,graphheight+yoffset,x,yoffset);
-	noStroke();
-	fill(0,0,0,1);
-	textSize(16);
-	text("slowest finisher "+str(round(slowestfinisher[slider.value()]*10)/10)+"km",x+5,20+yoffset+1*15)
 	//fastest line
 	// stroke(1,0,0,1);
 	// x=fastestfinisher[slider.value()]/racedistance*graphwidth+xoffset;
@@ -185,7 +162,32 @@ function draw() {
 		height=min(graphheight,5*bins_finisher[slider.value()][bin]);
 		rect(width+xoffset,graphheight+yoffset-height,graphwidth/diststeps,height);
 	}
-
+	//cut-off line
+	textgap=20;
+	stroke(1,0,0,1);
+	x=slider.value()*graphwidth/timesteps+xoffset;
+	line(x,graphheight+yoffset,x,yoffset+0*textgap+15);
+	noStroke();
+	fill(0,0,0,1);
+	textSize(16);
+	text("cut-off",x+5,20+yoffset+0*textgap)
+	//median line
+	stroke(1,0,0,1);
+	x=medians[slider.value()]/racedistance*graphwidth+xoffset;
+	line(x,graphheight+yoffset,x,yoffset+2*textgap+15);
+	noStroke();
+	fill(0,0,0,1);
+	textSize(16);
+	text("median "+str(round(medians[slider.value()]*10)/10)+"km",x+5,20+yoffset+2*textgap)
+	//slowest line
+	stroke(1,0,0,1);
+	x=slowestfinisher[slider.value()]/racedistance*graphwidth+xoffset;
+	line(x,graphheight+yoffset,x,yoffset+1*textgap+15);
+	noStroke();
+	fill(0,0,0,1);
+	textSize(16);
+	text("slowest finisher "+str(round(slowestfinisher[slider.value()]*10)/10)+"km",x+5,20+yoffset+1*textgap)
+	
 	// stats
 	noStroke();
 	fill(0,0,0,1);
